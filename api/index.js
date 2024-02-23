@@ -7,16 +7,12 @@ import authRouter from "./routes/auth.route.js";
 import adminRouter from "./routes/admin.route.js";
 import listingRouter from "./routes/listing.route.js";
 import cookieParser from "cookie-parser";
-import path from 'path';
 
 //configure env
 dotenv.config();
 
 //database config
 connectDB();
-
-//directory name for deployment
-const __dirname = path.resolve();
 
 //rest object
 const app = express();
@@ -38,14 +34,6 @@ app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/listing", listingRouter);
-
-
-//for deployment
-app.use(express.static(path.join(__dirname, '/client/dist')));
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
-})
 
 //error handling middleware
 app.use((err, req, res, next) => {
